@@ -7,23 +7,26 @@ for (var i = 0; i<numberOfDrumButtons; i++) {
 
   var buttonClickedInnerHTML = this.innerHTML;
 
-  makeSound(buttonClickedInnerHTML);
+  makeSound(buttonClickedInnerHTML); // e.g "j" is the inner html for that particular button - this gets passed into the (keyValue) of makeSound
 
+  buttonAnimation (buttonClickedInnerHTML);
   });
 
 }
 
 //Detecting KeyBoard Press
 
-  document.addEventListener("keydown", function(event) {
-    makeSound(event.key);
+  document.addEventListener("keydown", function(event) { //(event) = event object - gives you access to the properties of the event that triggered the keydown property
+    makeSound(event.key); // e.g event.key = "w" - this gets passed into (keyValue)
+
+    buttonAnimation (event.key);
 
   });
 
 
-function makeSound (key) {
+function makeSound (keyValue) { // makeSound function created that allows an input
 
-  switch (key) {
+  switch (keyValue) {  // loops through until it finds the right keyValue e.g "j", and then runs that function
     case "w":
       var tom1 = new Audio('sounds/tom-1.mp3');
       tom1.play();
@@ -59,6 +62,19 @@ function makeSound (key) {
     kick.play();
     break;
 
-    default: console.log(key);
+    default: console.log(keyValue);
   }
+}
+
+
+//animation function - adding removing css styles 
+
+function buttonAnimation (currentKey) {
+
+  document.querySelector("." + currentKey).classList.add("pressed");
+
+  setTimeout (function () {
+  document.querySelector("." + currentKey).classList.remove("pressed");
+  }, 100);
+
 }
